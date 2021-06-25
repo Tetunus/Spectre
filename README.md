@@ -3,6 +3,13 @@ An interprocess communication method based off of Microsoft's Winsock. Unlike us
 
 - Import all files into a C++ project.
 - Read "Example.cpp" for all information.
+- Join the discord @ https://discord.gg/qEWnWajbaY
 
-- Demo Client: https://github.com/Tetunus/Spectre-Demo-Client
-- Discord: https://discord.gg/qEWnWajbaY
+# Servers
+
+- C++ : https://github.com/Tetunus/Spectre
+- Node.js: https://github.com/Tetunus/Spectre.JS
+
+# Clients
+
+- C#/.NET : https://github.com/Tetunus/Spectre-Demo-Client

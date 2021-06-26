@@ -3,7 +3,7 @@
 //                                                                 //
 //  File: Spectre.Tools.h                                          //
 //  Author: Tetunus (Josh)                                         //
-//  Version: 0.0.1                                                 //
+//  Version: 0.0.2                                                 //
 //  Description: Additional tools that Spectre uses for various    //
 //               functions and security features.                  //
 //                                                                 //
@@ -11,11 +11,11 @@
 
 #pragma once
 
-namespace Spectre
+namespace spectre
 {
-    namespace Util
+    namespace util
     {
-        char* GetPublicIP();
-        char* GetLocalIP();
+        char* getlocalip();
+        char* getpublicip();
     }
 }

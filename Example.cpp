@@ -3,7 +3,6 @@
 //                                                                 //
 //  File: Example.cpp                                              //
 //  Author: Tetunus (Josh)                                         //
-//  Version: 0.0.1                                                 //
 //  Description: An example main function and little show on how   //
 //               to use Spectre. Plus a bonus DllMain example.     //
 //                                                                 //
@@ -11,11 +10,11 @@
 
 //
 // Documentation:
-//     [int] Spectre::Server::Port         - The port the server will be running on. (default: 8888)
-//     [int] Spectre::Server::MaxClients   - The maximum amount of clients the server allows. (default: 1)
-//    [bool] Spectre::Server::IsProtected  - Protect server from out-of-network connections. (default: false)
-//     [int] Spectre::Server::Start(void)  - Starts the server on the designated port you set.
-//    [void] Spectre::Server::Close()      - Stops the server from running and flushes resources.
+//     [int] spectre::configuration->port          - The port the server will be running on. (default: 8888)
+//     [int] spectre::configuration->max_clients   - The maximum amount of clients the server allows. (default: 1)
+//    [bool] spectre::configuration->is_protected  - Protect server from out-of-network connections. (default: false)
+//     [int] spectre::server::start(void)          - Starts the server on the designated port you set.
+//    [void] spectre::server::close()              - Stops the server from running and flushes resources.
 //
 
 #include <iostream>
@@ -23,45 +22,49 @@
 
 #include "Spectre.h"
 
-void ExecuteExample(std::string script)
+void data_handler(std::string data)
 {
-    // Handle and or execute script here.
+    // Handle all incoming data here..
 }
 
 int main()
 {
     SetConsoleTitleA("Spectre  -  Interprocess Communication Server"); // Purpose: Just for fancy console title.
 
-    Spectre::Server::Port = 8888; // Purpose: This is the port the server will run on. (default: 8888)
-    Spectre::Server::MaxClients = 1; // Purpose: This is the maximum amount of clients the server will allow. (default: 1)
-    Spectre::Server::IsProtected = false;  // Purpose: Protect the server from out-of-network connections. (default: false)
+    spectre::server *server = new spectre::server();
 
-    Spectre::Server::Start(ExecuteExample); // Purpose: Initalize and start the Spectre server.
+    server->configuration->port = 8888; // Purpose: This is the port the server will run on. (default: 8888)
+    server->configuration->max_clients = 1; // Purpose: This is the maximum amount of clients the server will allow. (default: 1)
+    server->configuration->is_protected = false; // Purpose: Protect the server from out-of-network connections. (default: false)
+
+    server->start(data_handler); // Purpose: Initalize and start the Spectre server.
 
     std::cin.get(); // Purpose: This will pause the application after the server ends.
 
-    Spectre::Server::Start(ExecuteExample); // Purpose: This will reinitalize the server after it started.. technically a restart.
+    server->start(data_handler); // Purpose: This will reinitalize the server after it started.. technically a restart.
 }
 
 BOOL WINAPI DllMain(HINSTANCE instance, DWORD reason, LPVOID reserved)
 {
+    spectre::server* server = new spectre::server();
+
     switch (reason)
     {
         case DLL_PROCESS_ATTACH:
             // Preform all actions before the server starts..
 
             // Configure the server to your prefered settings.
-            Spectre::Server::Port = 8888; 
-            Spectre::Server::MaxClients = 1; 
-            Spectre::Server::IsProtected = false;
+            server->configuration->port = 8888;
+            server->configuration->max_clients = 1;
+            server->configuration->is_protected = false;
 
             // Start the server!
-            Spectre::Server::Start(ExecuteExample);
+            server->start(data_handler);
             break;
 
         case DLL_PROCESS_DETACH:
             // Close the server, just a little cleanup if you will.
-            Spectre::Server::Close();
+            server->close();
             break;
     }
 

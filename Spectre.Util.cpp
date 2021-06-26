@@ -3,7 +3,7 @@
 //                                                                 //
 //  File: Spectre.Tools.cpp                                        //
 //  Author: Tetunus (Josh)                                         //
-//  Version: 0.0.1                                                 //
+//  Version: 0.0.2                                                 //
 //  Description: Additional tools that Spectre uses for various    //
 //               functions and security features.                  //
 //                                                                 //
@@ -18,15 +18,15 @@
 
 #include "Spectre.Util.h"
 
-namespace Spectre
+namespace spectre
 {
-	namespace Util
+	namespace util
 	{
 		/// <summary>
 		/// Get the networks local IPv4 address via Winsock.
 		/// </summary>
 		/// <returns>Provate IPv4 Address</returns>
-		char* GetLocalIP()
+		char* getlocalip()
 		{
 			WSADATA wsa_data;
 
@@ -56,7 +56,7 @@ namespace Spectre
 		/// Get the networks public IPv4 address via ipify.
 		/// </summary>
 		/// <returns>Public IPv4 Address</returns>
-		char* GetPublicIP()
+		char* getpublicip()
 		{
 			HINTERNET connection = InternetOpen(L"Spectre", INTERNET_OPEN_TYPE_PRECONFIG, NULL, NULL, 0);
 

@@ -3,7 +3,7 @@
 //                                                                 //
 //  File: Spectre.h                                                //
 //  Author: Tetunus (Josh)                                         //
-//  Version: 0.0.1                                                 //
+//  Version: 0.0.2                                                 //
 //  Description: The main components and core code for the         //
 //               Spectre inter-process communication components.   //
 //                                                                 //
@@ -11,15 +11,21 @@
 
 #pragma once
 
-namespace Spectre
+namespace spectre
 {
-    namespace Server
+    struct config
     {
-        extern int Port; // Server port number.
-        extern int MaxClients; // Maximum amount of clients.
-        extern bool IsProtected; // Protect server from out-of-network connections
+        int port = 8888; // Default value.
+        int max_clients = 1; // Default value.
+        bool is_protected = false; // Default value.
+    };
 
-        void Close();
-        int Start(void action(std::string script));
-    }
+    class server
+    {
+    public:
+        struct config* configuration = (struct config*)malloc(sizeof(struct config)); // Server configuration.
+
+        void close();
+        int start(void action(std::string script));
+    };
 }

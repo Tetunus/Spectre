@@ -17,11 +17,11 @@
 
 //
 //  Documentation:
-//     [int] configuration->port          - The port the server will be running on. (default: 8888)
-//     [int] configuration->max_clients   - The maximum amount of clients the server allows. (default: 1)
-//    [bool] configuration->is_protected  - Protect server from out-of-network connections. (default: false)
-//     [int] server->start(void)          - Starts the server on the designated port you set.
-//    [void] server->close()              - Stops the server from running and flushes resources.
+//     [int] configuration.port          - The port the server will be running on. (default: 8888)
+//     [int] configuration.max_clients   - The maximum amount of clients the server allows. (default: 1)
+//    [bool] configuration.is_protected  - Protect server from out-of-network connections. (default: false)
+//     [int] server.start(void)          - Starts the server on the designated port you set.
+//    [void] server.close()              - Stops the server from running and flushes resources.
 //
 
 #include <iostream>

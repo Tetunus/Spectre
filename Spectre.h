@@ -23,7 +23,7 @@ namespace spectre
     class server
     {
     public:
-        struct config* configuration = (struct config*)malloc(sizeof(struct config)); // Server configuration.
+        struct config configuration; // Server configuration.
 
         void close();
         int start(void action(std::string script));

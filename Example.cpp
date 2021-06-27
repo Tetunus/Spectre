@@ -9,7 +9,14 @@
 /////////////////////////////////////////////////////////////////////
 
 //
-// Documentation:
+//  Credits:
+//     static   - Moral support.
+//     xgladius - Helped find and fix some memory leaks.
+//     Koaxy    - Helped test alpha builds and found buffer issues.
+//
+
+//
+//  Documentation:
 //     [int] configuration->port          - The port the server will be running on. (default: 8888)
 //     [int] configuration->max_clients   - The maximum amount of clients the server allows. (default: 1)
 //    [bool] configuration->is_protected  - Protect server from out-of-network connections. (default: false)
@@ -31,22 +38,22 @@ int main()
 {
     SetConsoleTitleA("Spectre  -  Interprocess Communication Server"); // Purpose: Just for fancy console title.
 
-    spectre::server *server = new spectre::server();
+    spectre::server server;
 
-    server->configuration->port = 8888; // Purpose: This is the port the server will run on. (default: 8888)
-    server->configuration->max_clients = 1; // Purpose: This is the maximum amount of clients the server will allow. (default: 1)
-    server->configuration->is_protected = false; // Purpose: Protect the server from out-of-network connections. (default: false)
+    server.configuration.port = 8888; // Purpose: This is the port the server will run on. (default: 8888)
+    server.configuration.max_clients = 1; // Purpose: This is the maximum amount of clients the server will allow. (default: 1)
+    server.configuration.is_protected = false; // Purpose: Protect the server from out-of-network connections. (default: false)
 
-    server->start(data_handler); // Purpose: Initalize and start the Spectre server.
+    server.start(data_handler); // Purpose: Initalize and start the Spectre server.
 
     std::cin.get(); // Purpose: This will pause the application after the server ends.
 
-    server->start(data_handler); // Purpose: This will reinitalize the server after it started.. technically a restart.
+    server.start(data_handler); // Purpose: This will reinitalize the server after it started.. technically a restart.
 }
 
 BOOL WINAPI DllMain(HINSTANCE instance, DWORD reason, LPVOID reserved)
 {
-    spectre::server* server = new spectre::server();
+    spectre::server server;
 
     switch (reason)
     {
@@ -54,17 +61,17 @@ BOOL WINAPI DllMain(HINSTANCE instance, DWORD reason, LPVOID reserved)
             // Preform all actions before the server starts..
 
             // Configure the server to your prefered settings.
-            server->configuration->port = 8888;
-            server->configuration->max_clients = 1;
-            server->configuration->is_protected = false;
+            server.configuration.port = 8888;
+            server.configuration.max_clients = 1;
+            server.configuration.is_protected = false;
 
             // Start the server!
-            server->start(data_handler);
+            server.start(data_handler);
             break;
 
         case DLL_PROCESS_DETACH:
             // Close the server, just a little cleanup if you will.
-            server->close();
+            server.close();
             break;
     }
 

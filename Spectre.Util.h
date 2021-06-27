@@ -3,7 +3,7 @@
 //                                                                 //
 //  File: Spectre.Tools.h                                          //
 //  Author: Tetunus (Josh)                                         //
-//  Version: 0.0.2                                                 //
+//  Version: 0.0.3                                                 //
 //  Description: Additional tools that Spectre uses for various    //
 //               functions and security features.                  //
 //                                                                 //

@@ -66,7 +66,7 @@ namespace spectre
         buffer = (char*)malloc((static_cast<unsigned long long>(maxbuffer) + 1) * sizeof(char));
 
         // Clean the client sockets with the MaxClients in mind
-        for (i = 0; i < configuration->max_clients; i++)
+        for (i = 0; i < configuration.max_clients; i++)
         {
             client_socket[i] = 0;
         }
@@ -83,7 +83,7 @@ namespace spectre
         printf("[Spectre -> Debug] Initialising.. ");
 
         // Valid port check
-        if (configuration->port < 255 || configuration->port > 65535)
+        if (configuration.port < 255 || configuration.port > 65535)
         {
             printf(" Failed.\n");
             printf("[Spectre -> Error] It seems your Port number was below 255 or above 65535, please change this and try again.\n");
@@ -92,7 +92,7 @@ namespace spectre
         }
 
         // Valid max clients check
-        if (configuration->max_clients < 1 || configuration->max_clients > 30)
+        if (configuration.max_clients < 1 || configuration.max_clients > 30)
         {
             printf(" Failed.\n");
             printf("[Spectre -> Error] It seems your MaxClients was below 1 or above 30, please change this and try again.\n");
@@ -124,7 +124,7 @@ namespace spectre
         // Prep the sockaddr_in structure
         sserver.sin_family = AF_INET;
         sserver.sin_addr.S_un.S_addr = INADDR_ANY;
-        sserver.sin_port = htons(configuration->port);
+        sserver.sin_port = htons(configuration.port);
 
         // Bind to the server
         if (bind(master_socket, (struct sockaddr*)&sserver, sizeof(sserver)) == SOCKET_ERROR)
@@ -134,12 +134,12 @@ namespace spectre
             exit(EXIT_FAILURE);
         }
 
-        printf("[Spectre -> Debug] Successfully binded to port %i.\n", configuration->port);
+        printf("[Spectre -> Debug] Successfully binded to port %i.\n", configuration.port);
 
         // Listen to incoming conns
         listen(master_socket, 3);
 
-        if (configuration->is_protected)
+        if (configuration.is_protected)
         {
             //char* publicip = Tools::GetPublicIP();
 
@@ -166,7 +166,7 @@ namespace spectre
             FD_SET(master_socket, &readfds);
 
             // Add child sockets to fd set
-            for (i = 0; i < configuration->max_clients; i++)
+            for (i = 0; i < configuration.max_clients; i++)
             {
                 fake_socket = client_socket[i];
 
@@ -196,7 +196,7 @@ namespace spectre
                     exit(EXIT_FAILURE);
                 }
 
-                if (inet_ntoa(address.sin_addr) != limiter && configuration->is_protected == true)
+                if (inet_ntoa(address.sin_addr) != limiter && configuration.is_protected == true)
                 {
                     printf("[Spectre -> Debug] Blocked connection, Socket FD: %i, IP: %s, Port: %i\n", static_cast<int>(new_socket), inet_ntoa(address.sin_addr), ntohs(address.sin_port));
                 }
@@ -205,7 +205,7 @@ namespace spectre
                     printf("[Spectre -> Debug] New connection, Socket FD: %i, IP: %s, Port: %i\n", static_cast<int>(new_socket), inet_ntoa(address.sin_addr), ntohs(address.sin_port));
 
                     // Add new socket to array of sockets
-                    for (i = 0; i < configuration->max_clients; i++)
+                    for (i = 0; i < configuration.max_clients; i++)
                     {
                         if (client_socket[i] == 0)
                         {
@@ -218,7 +218,7 @@ namespace spectre
             }
 
             // Else its some IO operation on some other socket
-            for (i = 0; i < configuration->max_clients; i++)
+            for (i = 0; i < configuration.max_clients; i++)
             {
                 fake_socket = client_socket[i];
 
@@ -265,7 +265,7 @@ namespace spectre
                         {
                             buffer[valread] = '\0'; // Add empty char, try removing this i dare you <3
 
-                            if (inet_ntoa(address.sin_addr) != limiter && configuration->is_protected == true)
+                            if (inet_ntoa(address.sin_addr) != limiter && configuration.is_protected == true)
                             {
                                 printf("[Spectre -> Debug] %s:%d - Data Blocked - %zu\n", inet_ntoa(address.sin_addr), ntohs(address.sin_port), strlen(buffer));
                             }

@@ -20,7 +20,7 @@
 //     [int] configuration.port          - The port the server will be running on. (default: 8888)
 //     [int] configuration.max_clients   - The maximum amount of clients the server allows. (default: 1)
 //    [bool] configuration.is_protected  - Protect server from out-of-network connections. (default: false)
-//    [bool] configuration.is_encrypted  - Decrypt all data recieved from the client. (default: false)
+//    [bool] configuration.is_encrypted  - Decrypt all data recieved from the client. (default: false) (method: Base64)
 //     [int] server.start(void)          - Starts the server on the designated port you set.
 //    [void] server.close()              - Stops the server from running and flushes resources.
 //
@@ -44,7 +44,7 @@ int main()
     server.configuration.port = 8888; // Purpose: This is the port the server will run on. (default: 8888)
     server.configuration.max_clients = 1; // Purpose: This is the maximum amount of clients the server will allow. (default: 1)
     server.configuration.is_protected = false; // Purpose: Protect the server from out-of-network connections. (default: false)
-    server.configuration.is_encrypted = false; // Purpose: Decrypt all data recieved from the client. (default: false)
+    server.configuration.is_encrypted = false; // Purpose: Decrypt all data recieved from the client. (default: false) (method: Base64)
 
     server.start(data_handler); // Purpose: Initalize and start the Spectre server.
 

@@ -18,6 +18,8 @@ namespace spectre
         int port = 8888; // Default value.
         int max_clients = 1; // Default value.
         bool is_protected = false; // Default value.
+        bool is_encrypted = false; // Default value.
+        char key = 'S'; // Default value.
     };
 
     class server

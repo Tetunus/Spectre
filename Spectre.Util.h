@@ -17,5 +17,7 @@ namespace spectre
     {
         char* getlocalip();
         char* getpublicip();
+
+        std::string decrypt(std::string data);
     }
 }

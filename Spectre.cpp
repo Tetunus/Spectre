@@ -44,7 +44,6 @@ namespace spectre
     char* limiter; // Out-of-network protection IP limiter.
     fd_set readfds; // Socket FD set.
 
-
     /// <summary>
     /// Stop the Spectre server and cleanup used resources.
     /// </summary>
@@ -271,7 +270,14 @@ namespace spectre
                             }
                             else
                             {
-                                printf("[Spectre -> Debug] %s:%d - Data Recieved - %zu\n", inet_ntoa(address.sin_addr), ntohs(address.sin_port), strlen(buffer));
+                                if (configuration.is_encrypted)
+                                {
+                                    printf("[Spectre -> Debug] %s:%d - Data Recieved - %zu (Encrypted)\n", inet_ntoa(address.sin_addr), ntohs(address.sin_port), strlen(buffer));
+                                }
+                                else
+                                {
+                                    printf("[Spectre -> Debug] %s:%d - Data Recieved - %zu (Unencrypted)\n", inet_ntoa(address.sin_addr), ntohs(address.sin_port), strlen(buffer));
+                                }
 
                                 // The reason we have to check if the buffer is maxing out is because
                                 // if we do not add it to "script" it will end up executing in chunks
@@ -281,13 +287,27 @@ namespace spectre
 
                                 if (strlen(buffer) > 65000) // Reached buffer max, add to script
                                 {
-                                    script = script + std::string(buffer);
+                                    if (configuration.is_encrypted)
+                                    {
+                                        script = script + util::decrypt(std::string(buffer));
+                                    }
+                                    else
+                                    {
+                                        script = script + std::string(buffer);
 
-                                    printf("[Spectre -> Debug] Data reached max buffer, adding to current buffer..\n");
+                                        printf("[Spectre -> Debug] Data reached max buffer, adding to current buffer..\n");
+                                    }
                                 }
                                 else // Buffer is finished, move on
                                 {
-                                    script = script + std::string(buffer); // Add final buffer to stored script value
+                                    if (configuration.is_encrypted)
+                                    {
+                                        script = script + util::decrypt(std::string(buffer));
+                                    }
+                                    else
+                                    {
+                                        script = script + std::string(buffer); // Add final buffer to stored script value
+                                    }
 
                                     if (strlen(buffer) == 12 && strstr(buffer, "SPECTRE_STOP")) // If requested value if to close the server, handle it, if not move on
                                     {
@@ -295,7 +315,14 @@ namespace spectre
                                     }
                                     else
                                     {
-                                        printf("[Spectre -> Debug] Finished adding buffer to final buffer, final length was %zu..\n", script.length());
+                                        if (configuration.is_encrypted)
+                                        {
+                                            printf("[Spectre -> Debug] All data from client recieved, final length was %zu.. (Decrypted)\n", script.length());
+                                        }
+                                        else
+                                        {
+                                            printf("[Spectre -> Debug] All data from client recieved, final length was %zu.. (Unencrypted)\n", script.length());
+                                        }
 
                                         action(script); // Perform requested action with the full script value as the parameter
 

@@ -44,7 +44,7 @@ int main()
     server.configuration.port = 8888; // Purpose: This is the port the server will run on. (default: 8888)
     server.configuration.max_clients = 1; // Purpose: This is the maximum amount of clients the server will allow. (default: 1)
     server.configuration.is_protected = false; // Purpose: Protect the server from out-of-network connections. (default: false)
-    server.configuration.is_encrypted = true; // Purpose: Decrypt all data recieved from the client. (default: false)
+    server.configuration.is_encrypted = false; // Purpose: Decrypt all data recieved from the client. (default: false)
 
     server.start(data_handler); // Purpose: Initalize and start the Spectre server.
 

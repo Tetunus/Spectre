@@ -3,7 +3,7 @@
 //                                                                 //
 //  File: Spectre.cpp                                              //
 //  Author: Tetunus (Josh)                                         //
-//  Version: 0.0.3                                                 //
+//  Version: 0.0.4                                                 //
 //  Description: The main components and core code for the         //
 //               Spectre inter-process communication components.   //
 //                                                                 //
@@ -40,7 +40,7 @@ namespace spectre
     int i; // The illiteration constipation proclamation
     bool closed = false; // Causes the server to stop when true.
     char* buffer; // It is the fucking buffer, buffer go BRRRRRR.
-    char* message = (char*)"Spectre 0.0.1 \r\n"; // Coming soon, for now version.
+    char* message = (char*)"Spectre 0.0.4 \r\n"; // Coming soon, for now version.
     char* limiter; // Out-of-network protection IP limiter.
     fd_set readfds; // Socket FD set.
 

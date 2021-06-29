@@ -3,7 +3,7 @@
 //                                                                 //
 //  File: Spectre.h                                                //
 //  Author: Tetunus (Josh)                                         //
-//  Version: 0.0.3                                                 //
+//  Version: 0.0.4                                                 //
 //  Description: The main components and core code for the         //
 //               Spectre inter-process communication components.   //
 //                                                                 //
